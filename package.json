@@ -12,7 +12,8 @@
     "graphql-tools": "^2.13.0",
     "lodash": "^4.17.4",
     "node-fetch": "^1.7.3",
-    "sequelize": "^4.28.2",
+    "sequelize": "^4.32.1",
+    "sequelize-cli": "^3.2.0",
     "sqlite": "^2.9.0"
   },
   "devDependencies": {
