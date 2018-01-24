@@ -2,6 +2,12 @@
 
 Proof of Concept of exposing a legacy system (using a Mysql database)
 
+Originally cloned from this started template:
+https://github.com/apollographql/apollo-tutorial-kit
+
+Which is the foundation for this blog post: https://dev-blog.apollodata.com/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs
+
+
 ## Development
 
 Install all dependencies:
