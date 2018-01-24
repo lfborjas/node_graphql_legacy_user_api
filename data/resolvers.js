@@ -5,9 +5,17 @@ var models = require('../models');
 // we could have _actual_ dates vs strings:
 // from https://www.apollographql.com/docs/graphql-tools/scalars.html#Date-as-a-scalar
 // + https://github.com/tjmehta/graphql-date/blob/master/index.js
+
+
+// Sequelize (GraphQL?) is smart enough to know that a scalar attribute in a type resolves to
+// an attribute in a Sequelize object; so we only need to write resolvers
+// for attributes for a type in the schema that aren't attributes in a model.
+// This is good in the sense that a type doesn't have to map 1-to-1 to a model
+// (which allows decoration, simplification, etc.; encapsulation, in short).
 const resolvers = {
   Query: {
     user(root, args){
+      // the graphql library knows to resolve this promise
       return models.user.findOne({where: args});
     }
   },
@@ -17,7 +25,9 @@ const resolvers = {
     }
   },
   Subscription: {
-    //this could act as a "decorator"
+    // clearest example of a resolver acting as a decorator (in the "facade" sense
+    // that rails decorators use): we define simple attributes that are
+    // aliases/transformations of underlying attributes, or attributes of associated models
     vertical(sub){
       return sub.getSubscriptionProfile().then(profile=>{
         return profile.subscriptionVerticalId;

@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models){
     User.hasMany(models.subscriptionProfile, {foreignKey: 'customer_id', sourceKey: 'id'});
 
-    //this took me way too long to figure out, and I'm sure it's hacky as fuck
+    //We're basically returning a flat array of subscriptions, using the eager loading
+    //feature to not have too many nested promises: http://docs.sequelizejs.com/manual/tutorial/models-usage.html#nested-eager-loading
     User.prototype.getSubscriptions = function getSubscriptions(){
       return this.getSubscriptionProfiles({include: [{model: models.subscription}]}).
         then(profiles => {
@@ -28,19 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
   }
-
-  /*
-  User.prototype.getSubscriptions = function getSubscriptions(){
-    this.getSubscriptionProfiles({
-      include: [
-        {model: Subscription}
-      ]
-    }).then( subscription_profiles => {
-      var reducer = (acc, profile) => acc.concat(profile.getSubscriptions());
-      return subscription_profiles.reduce(reducer, []);
-    });
-  };
-*/
   
   return User;
 };

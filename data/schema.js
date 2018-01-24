@@ -2,6 +2,10 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 
 import resolvers from './resolvers';
 
+// The schema doesn't have to be defined as a string, other people prefer using
+// lower level objects due to the libs they use:
+// https://github.com/gauravtiwari/graphql-server-examples/blob/master/javascript/express_graphql/api/schema.js
+// But this schema was simple enough.
 const typeDefs = `
 scalar Date
 

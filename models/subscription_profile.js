@@ -1,4 +1,7 @@
 'use strict';
+// these type definitions are verbose mostly because we're dealing with a legacy
+// database that doesn't follow the opinions that Sequelize has:
+// http://docs.sequelizejs.com/manual/advanced/legacy.html
 module.exports = (sequelize, DataTypes) => {
   var SubscriptionProfile = sequelize.define('subscriptionProfile', {
     id: {
@@ -27,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'customer_subscription_profile'
   });
 
+  // This is the v4 way of defining associations, classMethods is no longer
+  // accepted as a model option and will be ignored:
+  // http://docs.sequelizejs.com/manual/tutorial/upgrade-to-v4.html
+  // note that we're using lower snake case keys here, but they're really referencing
+  // the lowerCamelCase attributes in the models (vs the actual column names), Sequelize is just
+  // generous enough to seamlessly translate those for us
   SubscriptionProfile.associate = function(models){
     SubscriptionProfile.belongsTo(
       models.user, {

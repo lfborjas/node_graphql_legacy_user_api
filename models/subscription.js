@@ -1,4 +1,8 @@
 'use strict';
+// these type definitions are verbose mostly because we're dealing with a legacy
+// database that doesn't follow the opinions that Sequelize has:
+// http://docs.sequelizejs.com/manual/advanced/legacy.html
+
 module.exports = (sequelize, DataTypes) => {
   var Subscription = sequelize.define('subscription', {
     id: {
@@ -47,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
   Subscription.associate = function(models){
     Subscription.SubscriptionProfile = Subscription.belongsTo(
       //we're using the name given to sequelize.define here, not the
-      //actual class name
+      //actual class name (which would be SubscriptionProfile)
       models.subscriptionProfile,
       {foreignKey: 'customer_subscription_profile_id',
        targetKey: 'id'}
