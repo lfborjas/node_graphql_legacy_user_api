@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var SubscriptionProfile = sequelize.define('subscription_profile', {
+  var SubscriptionProfile = sequelize.define('subscriptionProfile', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,

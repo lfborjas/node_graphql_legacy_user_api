@@ -15,12 +15,25 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
     tableName: "customer_entity",
-    classMethods: {
-      associate: function(models) {
-        User.SubscriptionProfiles = User.hasMany(models.SubscriptionProfiles, {foreignKey: 'customer_id', sourceKey: 'entity_id'});
-      }
-    }
   });
+
+  User.associate = function(models){
+    User.hasMany(models.subscriptionProfile, {foreignKey: 'customer_id', sourceKey: 'entity_id'});
+  }
+
+  /*
+  User.prototype.getSubscriptions = function getSubscriptions(){
+    this.getSubscriptionProfiles({
+      include: [
+        {model: Subscription}
+      ]
+    }).then( subscription_profiles => {
+      var reducer = (acc, profile) => acc.concat(profile.getSubscriptions());
+      return subscription_profiles.reduce(reducer, []);
+    });
+  };
+*/
+  
   return User;
 };
 
