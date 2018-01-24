@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = function(models){
-    User.hasMany(models.subscriptionProfile, {foreignKey: 'customer_id', sourceKey: 'entity_id'});
+    User.hasMany(models.subscriptionProfile, {foreignKey: 'customer_id', sourceKey: 'id'});
   }
 
   /*

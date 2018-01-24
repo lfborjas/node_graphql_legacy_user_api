@@ -42,15 +42,17 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
     tableName: "subscriptions",
-    classMethods: {
-      associate: function(models) {
-        Subscription.SubscriptionProfile = Subscription.belongsTo(
-          models.SubscriptionProfile,
-          {foreignKey: 'customer_subscription_profile_id',
-           targetKey: 'id'}
-        );
-      }
-    }
   });
+
+  Subscription.associate = function(models){
+    Subscription.SubscriptionProfile = Subscription.belongsTo(
+      //we're using the name given to sequelize.define here, not the
+      //actual class name
+      models.subscriptionProfile,
+      {foreignKey: 'customer_subscription_profile_id',
+       targetKey: 'id'}
+    );
+  }
+
   return Subscription;
 };

@@ -24,22 +24,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     timestamps: false,
-    tableName: 'customer_subscription_profile',
-    classMethods: {
-      associate: function(models){
-        SubscriptionProfile.User = SubscriptionProfile.belongsTo(
-          models.User, {
-            foreignKey: 'customer_id', targetKey: 'entity_id'
-          }
-        );
-        SubscriptionProfile.Subscriptions = SubscriptionProfile.hasMany(
-          models.Subscription, {
-            foreignKey: 'customer_subscription_profile_id',
-            sourceKey: 'id'
-          }
-        );
-      }
-    }
+    tableName: 'customer_subscription_profile'
   });
+
+  SubscriptionProfile.associate = function(models){
+    SubscriptionProfile.belongsTo(
+      models.user, {
+        foreignKey: 'customer_id', targetKey: 'id'
+      }
+    );
+    SubscriptionProfile.hasMany(
+      models.subscription, {
+        foreignKey: 'customer_subscription_profile_id',
+        sourceKey: 'id'
+      }
+    );
+  }
+  
   return SubscriptionProfile;
 };
