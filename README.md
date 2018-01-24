@@ -63,6 +63,10 @@ npm start
 # go to localhost:3000/graphqli
 ```
 
+An example query would look like this:
+
+![example query](example.png?raw=true "Example Query")
+
 ## References
 
 - Based on this tutorial: https://dev-blog.apollodata.com/tutorial-building-a-graphql-server-cddaa023c035
