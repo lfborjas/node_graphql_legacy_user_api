@@ -1,4 +1,6 @@
-import { User, Subscription, Box, Product } from './connectors'
+import { Kind } from 'graphql/language';
+import { GraphQLScalarType } from 'graphql';
+import models from '../models';
 
 // from https://www.apollographql.com/docs/graphql-tools/scalars.html#Date-as-a-scalar
 const resolvers = {
@@ -19,16 +21,16 @@ const resolvers = {
     }
   }),
   Query: {
-    user(root, args){},
-    currentUser(){}
+    user(root, args){
+      return User.findOne(where: args)
+    }
   },
   User: {
-    subscriptions(user){}
+    subscriptions(user){
+      return user.getSubscriptions();
+    }
   },
   Subscription: {
-    box_history(subscription){}
-  },
-  Box: {
-    samples(box){}
+    
   }
 }
