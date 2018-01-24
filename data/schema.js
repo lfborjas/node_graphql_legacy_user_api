@@ -12,11 +12,25 @@ type User {
   subscriptions: [Subscription]
 }
 
+type SubscriptionProfile {
+  id: Int,
+  subscriptionVerticalId: Int,
+  shippingAddressId: Int,
+  isPaused: Boolean
+}
+
 type Subscription {
-  name: String,
-  is_active: Boolean,
+  id: Int,
+  subscriptionType: Int,
+  status: Int,
+  boxesRemaining: Int,
+  nextShipDate: Date,
+  createdAt: Date,
+  updatedAt: Date,
+  shippingFrequency: Int,
+  isActive: Boolean,
   vertical: Int,
-  next_ship_date: Date
+  subscriptionProfile: SubscriptionProfile
 }
 
 type Query {

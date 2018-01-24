@@ -1,6 +1,6 @@
 import { Kind } from 'graphql/language';
 import { GraphQLScalarType } from 'graphql';
-import models from '../models';
+var models = require('../models');
 
 // from https://www.apollographql.com/docs/graphql-tools/scalars.html#Date-as-a-scalar
 const resolvers = {
@@ -13,7 +13,7 @@ const resolvers = {
     serialize(value){
       return value.getTime()
     },
-    parseLiteral(ast: any) {
+    parseLiteral(ast) {
       if (ast.kind === Kind.INT) {
         return parseInt(ast.value, 10); // ast value is always in string format
       }
@@ -22,7 +22,7 @@ const resolvers = {
   }),
   Query: {
     user(root, args){
-      return User.findOne(where: args)
+      return models.user.findOne({where: args});
     }
   },
   User: {
@@ -31,6 +31,19 @@ const resolvers = {
     }
   },
   Subscription: {
-    
+    //this could act as a "decorator"
+    vertical(sub){
+      return sub.getSubscriptionProfile().then(profile=>{
+        return profile.subscriptionVerticalId;
+      });
+    },
+    isActive(sub){
+      return sub.status == 1;
+    },
+    subscriptionProfile(sub){
+      return sub.getSubscriptionProfile();
+    }
   }
 }
+
+export default resolvers;

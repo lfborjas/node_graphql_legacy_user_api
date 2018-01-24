@@ -19,6 +19,14 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models){
     User.hasMany(models.subscriptionProfile, {foreignKey: 'customer_id', sourceKey: 'id'});
+
+    //this took me way too long to figure out, and I'm sure it's hacky as fuck
+    User.prototype.getSubscriptions = function getSubscriptions(){
+      return this.getSubscriptionProfiles({include: [{model: models.subscription}]}).
+        then(profiles => {
+          return profiles.reduce((acc, profile)=>acc.concat(profile.subscriptions), []);
+        });
+    }
   }
 
   /*
