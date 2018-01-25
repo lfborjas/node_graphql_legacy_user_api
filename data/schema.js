@@ -7,7 +7,7 @@ import resolvers from './resolvers';
 // https://github.com/gauravtiwari/graphql-server-examples/blob/master/javascript/express_graphql/api/schema.js
 // But this schema was simple enough.
 const typeDefs = `
-scalar Date
+scalar DateTime
 
 type User {
   id: Int,
@@ -28,9 +28,9 @@ type Subscription {
   subscriptionType: Int,
   status: Int,
   boxesRemaining: Int,
-  nextShipDate: String,
-  createdAt: String,
-  updatedAt: String,
+  nextShipDate: DateTime,
+  createdAt: DateTime,
+  updatedAt: DateTime,
   shippingFrequency: Int,
   isActive: Boolean,
   vertical: Int,

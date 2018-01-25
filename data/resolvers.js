@@ -7,6 +7,7 @@ var models = require('../models');
 // + https://github.com/tjmehta/graphql-date/blob/master/index.js
 
 
+
 // Sequelize (GraphQL?) is smart enough to know that a scalar attribute in a type resolves to
 // an attribute in a Sequelize object; so we only need to write resolvers
 // for attributes for a type in the schema that aren't attributes in a model.
@@ -39,7 +40,25 @@ const resolvers = {
     subscriptionProfile(sub){
       return sub.getSubscriptionProfile();
     }
-  }
+  },
+  //FINALLY found a way to represent dates sanely: https://github.com/mickhansen/graphql-sequelize/issues/166#issuecomment-188553064
+  DateTime: new GraphQLScalarType({
+    name: 'DateTime',
+    description: 'Standard Date Format: ISO-8601',
+    serialize(d){
+      if(!d) return null;
+      if((d instanceof Date)){
+        return d.toISOString();
+      }
+      return d;
+    },
+    parseValue(value){
+      return new Date(value);
+    },
+    parseLiteral(ast){
+      return new Date(ast.value);
+    }
+  })
 }
 
 export default resolvers;
